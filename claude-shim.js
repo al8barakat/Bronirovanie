@@ -3,10 +3,10 @@
 (function () {
   // ===== ВСТАВЬТЕ СВОИ ДАННЫЕ ИЗ FIREBASE (Project settings → Your apps → Config) =====
   var firebaseConfig = {
-    apiKey: "ВСТАВЬТЕ",
-    authDomain: "ВСТАВЬТЕ",
-    projectId: "ВСТАВЬТЕ",
-    appId: "ВСТАВЬТЕ"
+    apiKey: "AIzaSyAN0wSjpLMQqEiYm2yvfW142JHyTIa34bk",
+    authDomain: "register-app-30f04.firebaseapp.com",
+    projectId: "register-app-30f04",
+    appId: "1:608203772826:web:49fd5b75e7efaa6a0de023"
   };
   // =====================================================================================
 
