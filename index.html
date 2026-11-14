@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Брони — админ</title>
+<style>
+:root{--bg:#f5f2ea;--card:#fff;--tx:#1d2b25;--mut:#66736c;--ac:#1f4e3d;--gd:#b9822a;--bd:#ddd6c6;--on:#fff;--bad:#b3261e;--ok:#2e7d4f;--wr:#fff3cd;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1f18;--card:#13322a;--tx:#f2eee2;--mut:#a3b8ad;--ac:#4fb08a;--gd:#f3ab3c;--bd:#24493d;--on:#0b1f18;--bad:#ff8a80;--ok:#7bd49b;--wr:#4a3d12;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1f18;--card:#13322a;--tx:#f2eee2;--mut:#a3b8ad;--ac:#4fb08a;--gd:#f3ab3c;--bd:#24493d;--on:#0b1f18;--bad:#ff8a80;--ok:#7bd49b;--wr:#4a3d12;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding-bottom:30px}
+.w{max-width:720px;margin:0 auto;padding:0 12px}
+header{background:var(--ac);color:var(--on);padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+header b{font-size:18px}header button{background:transparent;border:1px solid var(--on);color:var(--on);border-radius:99px;padding:4px 10px;font-size:13px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;position:sticky;top:0;background:var(--bg);z-index:5}
+.tabs button{white-space:nowrap;padding:9px 14px;border-radius:99px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}
+.tabs button.on{background:var(--ac);color:var(--on);border-color:var(--ac);font-weight:600}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin:10px 0}
+.card.x{opacity:.6}.card.x .t{text-decoration:line-through}.card.d{border-color:var(--gd);border-width:2px}
+.t{font-size:16px;font-weight:700}.m{color:var(--mut);font-size:13px}
+.bd{display:inline-block;font-size:12px;border-radius:99px;padding:2px 8px;margin:4px 4px 0 0;border:1px solid var(--bd)}
+.bd.ok{color:var(--ok);border-color:var(--ok)}.bd.no{color:var(--bad);border-color:var(--bad)}.bd.wr{background:var(--wr)}
+button{font:inherit;cursor:pointer}.b{padding:8px 12px;border-radius:10px;border:1px solid var(--ac);background:transparent;color:var(--ac)}
+.b.p{background:var(--ac);color:var(--on)}.b.r{border-color:var(--bad);color:var(--bad)}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
+input,select,textarea{width:100%;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px}
+label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}label.c{display:flex;gap:8px;align-items:center;color:var(--tx);font-size:15px}label.c input{width:auto}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hid,.ov.hid{display:none!important}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:14px;overflow:auto}
+.dl{background:var(--card);border-radius:16px;padding:16px;max-width:460px;width:100%;margin:auto}.dl h3{margin:0 0 6px}
+.err{color:var(--bad);font-size:14px;margin-top:6px}.tp{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:10px;z-index:99}
+*{-webkit-tap-highlight-color:transparent}.pgr{display:flex;flex-wrap:wrap;gap:6px}.pc{min-width:54px;padding:6px 8px;border-radius:10px;border:1px solid var(--ac);background:transparent;color:var(--ac);text-align:center;line-height:1.15;font-size:15px}.pc small{display:block;font-size:10px;opacity:.85}.pc.oc{background:rgba(200,50,40,.2);color:var(--bad);border-color:var(--bad);font-weight:700}.pc.sl{background:var(--ac);color:var(--on)}.pc:disabled{cursor:not-allowed}
+.card.st-x{border-left:6px solid #888}.card.st-p{border-left:6px solid var(--bad)}.card.st-c{border-left:6px solid var(--ok)}.card.st-n{border-left:6px solid var(--gd)}
+.b.g{padding:3px 9px;font-size:13px;border-color:var(--ok);color:var(--ok);margin-left:6px}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;padding:14px 20px;border-radius:99px;border:0;background:var(--gd);color:var(--on);font-weight:700;font-size:16px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.hb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.hb button{padding:12px 4px}
+.hm{display:grid;gap:8px;margin-top:10px}.ht{min-height:58px;border:2px solid var(--ok);color:var(--ok);border-radius:10px;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:15px;padding:2px;line-height:1.15}.ht small{font-size:10px;font-weight:400}.ht.ci{border-radius:50%}.ht.oc{border-color:var(--bad);background:rgba(200,50,40,.2);color:var(--bad)}.hl{display:flex;align-items:center;justify-content:center;color:var(--mut);font-weight:700;text-align:center}
+details{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin-top:10px}summary{cursor:pointer;font-weight:600;color:var(--ac)}details textarea{margin-top:8px}
+textarea.o{height:160px;font:12px monospace}
+</style></head><body>
+<header><b>Брони · админ</b><button id="who">…</button></header>
+<div class="w"><div class="tabs" id="tabs"></div><div id="msg" class="m">Загрузка…</div><div id="app" class="hid"></div></div>
+<button class="fab hid" id="fab" type="button">+ Бронь</button>
+<div id="ov" class="ov hid"><div class="dl" id="dl"></div></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="claude-shim.js"></script>
+<script>
+// ---------- чистая логика ----------
+var DUR=120,PLACES=[];
+(function(){function a(g,ns,cp){ns.forEach(function(n,i){PLACES.push({n:g+" "+n,g:g,cap:typeof cp==="function"?cp(n,i):cp})})}
+a("Диван",[1,2,3,4],6);a("Стол",[5,6,7,8,9,10,11,12,13,14,15,16],function(n){return [5,6,7,9,11,13,15].indexOf(n)>-1?4:2});a("Топчан",[1,2,3,4],8);a("VIP",[1,2],12);
+a("Летняя кабинка",[1,2,3,4,5],function(n){return {1:6,2:12,3:12,4:6,5:10}[n]});a("Малый зал",[1,2,3,4,5,6,7,8,9,10],12)})();
+function tmin(t){var p=(t||"0:0").split(":");return +p[0]*60+ +p[1]}
+function fdate(d){var p=d.split("-");return p[2]+"."+p[1]+"."+p[0]}
+function plist(b){return (b.places||[]).filter(Boolean)}
+function cap(b){return plist(b).reduce(function(s,n){var p=PLACES.filter(function(x){return x.n===n})[0];return s+(p?p.cap:0)},0)}
+function live(b){return b.status!=="cancelled"}
+function conflict(list,b){for(var i=0;i<list.length;i++){var o=list[i];if(o.id===b.id||o.date!==b.date||!live(o))continue;
+ if(Math.abs(tmin(o.time)-tmin(b.time))>=DUR)continue;var sh=plist(o).filter(function(n){return plist(b).indexOf(n)>-1});if(sh.length)return {o:o,sh:sh}}return null}
+function digits(s){return (s||"").replace(/\D/g,"")}
+function dups(list){var ids={};list.forEach(function(a,i){if(!live(a))return;list.forEach(function(b,j){if(j<=i||!live(b)||a.date!==b.date)return;
+ var ph=digits(a.phone).length>=6&&digits(a.phone).slice(-9)===digits(b.phone).slice(-9);var nm=a.name.trim().toLowerCase()===b.name.trim().toLowerCase()&&a.time===b.time;
+ if(ph||nm){ids[a.id]=1;ids[b.id]=1}})});return ids}
+function ppTxt(b){var p=b.prepay;return p&&p.need>0?("Предоплата "+p.need+(p.paid?" внесена ("+p.method+(p.to?" → "+p.to:"")+")":" не внесена")):""}
+function tsv(list){return list.map(function(b){var c=!live(b);var p=plist(b);var note=[b.note,b.preorder?"Предзаказ принят":""].filter(Boolean).join("; ");
+ return [fdate(b.date),b.time,b.name,b.phone,b.guests,p[0]||"",p[1]||"",p[2]||"",c?"Отмена":(b.confirmed?"Подтверждена":"Новая"),b.confirmed&&!c?"Да":"Нет",note,b.createdBy||""].join("\t")}).join("\n")}
+function waNum(p){var d=digits(p);if(d.length===11&&d[0]==="8")d="7"+d.slice(1);if(d.length===10)d="7"+d;return d}
+function rotH(c,R,C){return [c[0],c[1],c[2],C-c[4]-c[6]+2,c[3],c[6],c[5]]}
+function hallCells(h){var c=[],i,k,R,C;
+ if(h==="Лагман хана"){R=6;C=8;for(i=1;i<=4;i++){c.push(["Топчан "+i,"Т"+i,0,1,(i-1)*2+1,1,2]);c.push(["Диван "+i,"Д"+i,0,6,(i-1)*2+1,1,2])}
+  [[14,15,16],[11,12,13],[8,9,10],[5,6,7]].forEach(function(r,ri){r.forEach(function(n,ci){c.push(["Стол "+n,String(n),0,ri+2,ci*2+1,1,2])})});
+  c.push(["VIP 2","VIP 2",0,2,7,2,2]);c.push(["VIP 1","VIP 1",0,4,7,2,2])}
+ else if(h==="Летка"){R=5;C=1;for(k=5;k>=1;k--)c.push(["Летняя кабинка "+k,"К"+k,0,6-k,1,1,1])}
+ else{R=4;C=3;[[7,1,1,1],[8,1,2,1],[9,1,3,0],[6,2,1,1],[10,2,3,0],[5,3,1,1],[1,3,3,0],[4,4,1,1],[3,4,2,1],[2,4,3,0]].forEach(function(m){c.push(["Малый зал "+m[0],String(m[0]),m[3],m[1],m[2],1,1])});c.push(["","Малый зал",0,2,2,2,1])}
+ return {cols:R,rows:C,cells:c.map(function(x){return rotH(x,R,C)})}}
+function parseMsg(t){var r={lines:[]},m;t=t||"";
+ m=t.match(/Бронь на имя:\s*(.+)/);if(m)r.name=m[1].trim();
+ m=t.match(/Дата:\s*(\d{2})\.(\d{2})\.(\d{4})/);if(m)r.date=m[3]+"-"+m[2]+"-"+m[1];
+ m=t.match(/Гостей:\s*(\d+)/);if(m)r.guests=+m[1];
+ m=t.match(/Подача:\s*к\s*(.+)/);if(m){var v=m[1].trim();if(/ифтар/i.test(v))r.ift=true;else{var h=v.match(/(\d{1,2}):(\d{2})/);if(h)r.time=("0"+h[1]).slice(-2)+":"+h[2]}}
+ t.split(/\r?\n/).forEach(function(l){if(/^\s*\d+\.\s+/.test(l))r.lines.push(l.replace(/^\s*\d+\.\s+/,"").trim())});
+ m=t.match(/Итого:\s*([\d\s\u00a0]+)/);if(m)r.total=+m[1].replace(/\D/g,"");return r}
+// ---------- приложение ----------
+var exIds2=[],q="",TPL="Бронирование столика на Ифтар 🌙\n\nДля бронирования заполните форму по ссылке. Также в удобной форме вы сможете оформить предзаказ ⭐️\n\n🔗 https://al8barakat.github.io/zakaz/\n\n📩 После заполнения, пожалуйста, отправьте нам скопированный текст из формы.\n\nПросим вас заранее выбрать полный предзаказ и внимательно проверить его перед отправкой. По возможности, избегайте последующих изменений и дополнений к предзаказу после оформления бронирования,🙏чтобы мы могли своевременно подготовить ваш столик и обеспечить комфортное обслуживание всех гостей.😊\nДополнительные заказы во время посещения, конечно же, возможны 🤍\nНаш администратор проверит наличие мест, предложит подходящий столик и подтвердит бронирование.\nОбратите внимание: бронирование считается подтверждённым только после ответа администратора.\nБудем рады видеть вас на Ифтаре! 🌙🤍",IFT={},curMsg="",DRV="",mapT="19:00",mapH="",db=null,uid=null,me="",PINH="",B=[],D=[],BK=[],tab="list",date=iso(new Date()),showX=false,onlyDup=false,dl=null,dbDur=120;
+function iso(d){var z=function(n){return String(n).padStart(2,"0")};return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function toast(t){var e=document.createElement("div");e.className="tp";e.textContent=t;document.body.appendChild(e);setTimeout(function(){e.remove()},3200)}
+function nowTxt(ts){var d=new Date(ts),z=function(n){return String(n).padStart(2,"0")};return z(d.getDate())+"."+z(d.getMonth()+1)+" "+z(d.getHours())+":"+z(d.getMinutes())}
+function open(h){$("dl").innerHTML=h;$("ov").className="ov"}function close(){$("ov").className="ov hid"}
+function nameField(){return '<label>Ваше имя</label><input id="fn" value="'+esc(me)+'" placeholder="Кто выполняет действие">'}
+function needName(){var v=$("fn").value.trim();if(!v){$("er").textContent="Впишите ваше имя.";return null}return v}
+function setName(v){me=v;$("who").textContent="👤 "+v+" ✎";try{localStorage.setItem("adm_name",v)}catch(e){}if(db&&uid)db.doc("data/users/"+uid+"/profile").set({name:v}).catch(function(){})}
+function askName(first){open('<h3>'+(first?"Добро пожаловать":"Ваше имя")+'</h3><p class="m">Имя будет записываться при создании, изменении, отмене и удалении броней. Вход запоминается на этом телефоне.</p><input id="fn" value="'+esc(me)+'" placeholder="Например, Айша">'+(PINH&&!trusted()?'<label>Пароль админа</label><input id="fpw" type="password" placeholder="Пароль">':'')+'<div id="er" class="err"></div><div class="row"><button class="b p" id="ok">Продолжить</button></div>');
+ $("ok").onclick=async function(){var v=$("fn").value.trim();if(!v){$("er").textContent="Впишите имя.";return}if(PINH&&!trusted()){var pw=$("fpw")?$("fpw").value:"";if(await sha(pw)!==PINH){$("er").textContent="Неверный пароль.";return}}try{localStorage.setItem("adm_trust","1")}catch(e){}setName(v);close();render()}}
+function trusted(){try{return localStorage.getItem("adm_trust")==="1"}catch(e){return false}}
+async function sha(s){s="ab:"+s;try{var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}catch(e){var h=5381;for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return "d"+h}}
+function lock(d){return db.doc("locks/"+d).acquire({holder:uid||"x",ttlMs:6000})}
+async function saveB(b){var l;try{l=await lock(b.date)}catch(e){toast("Нет связи с базой");return false}
+ if(!l.acquired){toast("Другой админ сохраняет бронь. Повторите через несколько секунд.");return false}
+ try{var s=await db.collection("bookings").where("date","==",b.date).get();var fresh=s.docs.map(function(x){return x.data()});var c=conflict(fresh,b);
+  if(c){$("er")&&($("er").textContent="Место занято: "+c.sh.join(", ")+" — "+c.o.name+" в "+c.o.time);return false}
+  await db.doc("bookings/"+b.id).set(b);return true}catch(e){toast("Не удалось сохранить: "+(e.message||e.code));return false}
+ finally{db.doc("locks/"+b.date).delete().catch(function(){})}}
+var exIds=[],selP=[],curId=null;
+function occ(d,t,id){var m={};B.forEach(function(o){if(o.id===id||o.date!==d||!live(o)||Math.abs(tmin(o.time)-tmin(t))>=DUR)return;plist(o).forEach(function(n){m[n]=o})});return m}
+function pg(){var d=$("fd").value,t=$("ft").value,o=occ(d,t,curId),h="",g="",ol=[];
+ PLACES.forEach(function(p){if(p.g!==g){h+=(g?"</div>":"")+'<div class="m" style="margin-top:6px">'+p.g+'</div><div class="pgr">';g=p.g}
+  var oc=o[p.n],s=selP.indexOf(p.n)>-1;if(oc)ol.push(p.n+" ("+oc.name+" "+oc.time+")");
+  h+='<button type="button" class="pc'+(oc?" oc":"")+(s?" sl":"")+'" data-pn="'+p.n+'"'+(oc&&!s?" disabled":"")+'>'+p.n.replace(p.g+" ","")+"<small>"+(oc?esc(oc.time):p.cap)+"</small></button>"});
+ $("pg").innerHTML=h+"</div>";
+ var c=cap({places:selP}),gs=+$("fg").value;$("cp").textContent=selP.length?"Выбрано: "+selP.join(" + ")+" · мест: "+c+(gs>c?" — гостей больше, чем мест!":""):"Выберите место"}
+function form(b,pd,lk,pp,pt){var n=!b;b=b||{date:pd||date,time:pt||"19:00",name:"",phone:"",guests:2,places:pp||[],note:"",preorder:false,confirmed:false};selP=(b.places||[]).slice();curId=b.id||null;curMsg=b.msg||"";var pr=b.prepay||{};
+ open('<h3>'+(n?"Новая бронь":"Изменить бронь")+'</h3>'+(n?'<details'+(b.name?"":" open")+'><summary>📋 Вставить сообщение гостя</summary><textarea id="gm" rows="3" placeholder="Вставьте сообщение «ПРЕДЗАКАЗ — Аль-Баракат…»"></textarea><div class="row"><button class="b" id="gf" type="button">Заполнить</button></div><div id="gi" class="m"></div></details>':"")
+  +'<div class="g2"><div><label>Дата</label><input id="fd" type="date" value="'+b.date+'"></div><div><label>Время</label><input id="ft" type="time" value="'+b.time+'"></div></div>'
+  +'<label>Имя для брони</label><input id="fm" value="'+esc(b.name)+'"><div class="g2"><div><label>Телефон</label><input id="fp" type="tel" value="'+esc(b.phone)+'"></div><div><label>Гостей</label><input id="fg" type="number" min="1" max="200" value="'+b.guests+'"></div></div>'
+  +'<details><summary>Места: схема <span class="m" id="cp"></span></summary><div id="pg" style="margin-top:8px"></div></details>'
+  +'<label>Примечание</label><input id="fo" value="'+esc(b.note)+'"><div class="g2"><div><label>Предоплата, ₸</label><input id="pa" type="number" min="0" inputmode="numeric" value="'+(pr.need||"")+'"></div><div><label>Как внесли</label><select id="pm"><option value="">не внесена</option><option>Наличные</option><option>QR</option><option>Перевод</option></select></div></div><div id="pt" class="hid"><label>Кому переведены деньги (имя)</label><input id="ptn" value="'+esc(pr.to||"")+'"></div><label class="c"><input type="checkbox" id="fr"'+(b.preorder?" checked":"")+'> Предзаказ принят</label><label class="c"><input type="checkbox" id="fc"'+(b.confirmed?" checked":"")+'> Подтверждение гостю отправлено</label>'
+  +'<div id="er" class="err"></div><div class="row"><button class="b p" id="sv">Сохранить</button><button class="b" id="cn">Закрыть</button></div>');
+ var pv=function(){$("pt").className=$("pm").value==="Перевод"?"":"hid"};$("pm").value=pr.paid?(pr.method||""):"";$("pm").onchange=pv;pv();var re=function(){pg()};$("fd").oninput=re;$("ft").oninput=re;$("fg").oninput=re;pg();$("cn").onclick=close;
+ $("sv").onclick=async function(){var w=me;if(!w){$("er").textContent="Сначала укажите ваше имя (кнопка вверху справа).";return}
+  var x={id:b.id||"b"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),date:$("fd").value,time:$("ft").value,name:$("fm").value.trim(),phone:$("fp").value.trim(),guests:+$("fg").value,
+  places:selP.slice(),note:$("fo").value.trim(),preorder:$("fr").checked,confirmed:$("fc").checked,status:b.status||"active",createdBy:b.createdBy||w,createdAt:b.createdAt||Date.now(),updatedBy:w,updatedAt:Date.now()};
+  if(b.cancel)x.cancel=b.cancel;if(curMsg)x.msg=curMsg.slice(0,4000);if(b.exportedAt){x.exportedAt=b.exportedAt;x.exportedBy=b.exportedBy}
+  var need=+$("pa").value||0,pmv=$("pm").value,paid=!!pmv,ptv=$("ptn").value.trim();if(need>0)x.prepay={need:need,paid:paid,method:pmv,to:pmv==="Перевод"?ptv:""};
+  if(!x.date||!x.time||!x.name||!x.phone||!(x.guests>0)||!x.places.length){$("er").textContent="Заполните дату, время, имя, телефон, гостей и выберите место.";return}
+  if(paid&&!(need>0)){$("er").textContent="Укажите сумму предоплаты.";return}if(pmv==="Перевод"&&!ptv){$("er").textContent="Укажите, кому перевели деньги.";return}
+  $("sv").disabled=true;var ok=await saveB(x);$("sv").disabled=false;if(ok){close();date=x.date;tab="list";toast("Сохранено");render()}}}
+function reasonDlg(title,btn,run){open('<h3>'+title+'</h3>'+nameField()+'<label>Причина</label><textarea id="fr2" rows="3"></textarea><div id="er" class="err"></div><div class="row"><button class="b r" id="go">'+btn+'</button><button class="b" id="cn">Назад</button></div>');$("cn").onclick=close;
+ $("go").onclick=async function(){var w=needName();if(!w)return;var r=$("fr2").value.trim();if(!r){$("er").textContent="Укажите причину.";return}$("go").disabled=true;try{await run(w,r);close()}catch(e){toast("Ошибка: "+(e.message||e.code));$("go").disabled=false}}}
+function cancelB(b){reasonDlg("Отменить бронь «"+esc(b.name)+"»?","Отменить бронь",async function(w,r){await db.doc("bookings/"+b.id).update({status:"cancelled",cancel:{by:w,reason:r,at:Date.now()},updatedBy:w,updatedAt:Date.now()});toast("Бронь отменена")})}
+function delB(b){reasonDlg("Удалить бронь «"+esc(b.name)+"»?","Удалить",async function(w,r){var x=Object.assign({},b,{deletedBy:w,deletedReason:r,deletedAt:Date.now()});await db.doc("deleted/"+b.id).set(x);await db.doc("bookings/"+b.id).delete();toast("Удалено (смотрите вкладку «Удалённые»)")})}
+async function restoreB(b){var x=Object.assign({},b);["deletedBy","deletedReason","deletedAt"].forEach(function(k){delete x[k]});x.updatedBy=me;x.updatedAt=Date.now();
+ if(live(x)&&conflict(B,x)){toast("Нельзя восстановить: место уже занято");return}await db.doc("bookings/"+x.id).set(x);await db.doc("deleted/"+x.id).delete();toast("Восстановлено")}
+function waitP(b){return b.prepay&&b.prepay.need>0&&!b.prepay.paid}
+function card(b,dp,sd){var c=!live(b);return '<div class="card '+(c?"st-x":(waitP(b)?"st-p":(b.confirmed?"st-c":"st-n")))+(c?" x":"")+(dp?" d":"")+'"><div class="t">'+(sd?esc(fdate(b.date))+" · ":"")+esc(b.time)+" · "+esc(b.name)+" · "+esc(b.guests)+' чел.</div><div class="m"><a href="tel:'+esc(b.phone)+'" style="color:inherit">'+esc(b.phone)+'</a> <button class="b g" data-a="wa" data-i="'+b.id+'">WhatsApp</button> · '+esc(plist(b).join(" + ")||"место не указано")+'</div>'+
+ (b.note?'<div class="m">'+esc(b.note)+"</div>":"")+'<div>'+(dp?'<span class="bd wr">⭐ возможный дубль</span>':"")+'<span class="bd '+(b.preorder?"ok":"no")+'">предзаказ: '+(b.preorder?"взят":"нет")+'</span><span class="bd '+(b.confirmed?"ok":"")+'">'+(b.confirmed?"подтверждено гостю":"не подтверждено")+"</span>"+(c?'<span class="bd no">отменена</span>':"")+(b.exportedAt?((b.updatedAt||0)>b.exportedAt?'<span class="bd wr">изменена после записи в Excel</span>':'<span class="bd ok">записана в Excel</span>'):'<span class="bd">не записана в Excel</span>')+prepBadge(b)+"</div>"+
+ (c&&b.cancel?'<div class="m">Отменил: '+esc(b.cancel.by)+" · "+esc(b.cancel.reason)+" · "+nowTxt(b.cancel.at)+"</div>":"")+'<div class="m">Принял: '+esc(b.createdBy)+(b.updatedBy&&b.updatedAt!==b.createdAt?" · изменил: "+esc(b.updatedBy)+" "+nowTxt(b.updatedAt):"")+'</div>'+
+ '<div class="row"><button class="b" data-a="pre" data-i="'+b.id+'">'+(b.preorder?"Снять предзаказ":"Предзаказ принят")+'</button><button class="b" data-a="ed" data-i="'+b.id+'">Изменить</button>'+(b.msg?'<button class="b" data-a="po" data-i="'+b.id+'">Предзаказ</button>':"")+'<button class="b" data-a="mo" data-i="'+b.id+'">⋯</button></div></div>'}
+function pend(b){return !b.exportedAt||(b.updatedAt||0)>b.exportedAt}
+function srt(p,q){return p.date===q.date?tmin(p.time)-tmin(q.time):(p.date<q.date?-1:1)}
+function chips(){var m={};B.forEach(function(b){if(live(b))m[b.date]=(m[b.date]||0)+1});var ks=Object.keys(m).sort().slice(-40);
+ return ks.length?'<div class="m" style="margin-top:8px">Дни с бронями (нажмите, чтобы открыть только этот день):</div><div class="row" style="flex-wrap:nowrap;overflow-x:auto">'+ks.map(function(k){return '<button class="b'+(k===date?" p":"")+'" data-dd="'+k+'" style="white-space:nowrap">'+fdate(k).slice(0,5)+" ("+m[k]+")</button>"}).join("")+"</div>":""}
+function exportCard(){var dayB=B.filter(function(b){return b.date===date}),np=dayB.filter(pend).length;
+ return '<div class="card"><b>В Excel за '+fdate(date)+'</b><div class="m">Не записано в Excel: <b>'+np+'</b> · всего за день: <b>'+dayB.filter(live).length+'</b></div><div class="row"><button class="b p" id="ed">Не записанные за этот день</button><button class="b" id="ea2">Все брони за день</button></div><label class="c"><input type="checkbox" id="ex2"> включая отменённые</label><div id="en2" class="m"></div><textarea class="o hid" id="eo" readonly></textarea><div class="row hid" id="ea"><button class="b p" id="ec">Копировать</button><button class="b" id="es">Скачать файл</button></div><div class="row hid" id="eb"><button class="b p" id="em">Я записал в Excel — отметить</button></div><div class="m">В Excel: лист «Брони», ячейка B первой пустой строки → вставить (колонки B–M).</div></div>'}
+function money(n){var s=String(n),o="";for(var i=0;i<s.length;i++){if(i&&(s.length-i)%3==0)o+="\u00a0";o+=s[i]}return o+"\u00a0₸"}
+function prepBadge(b){var p=b.prepay;if(!p||!(p.need>0))return"";return p.paid?'<span class="bd ok">предоплата '+money(p.need)+" · "+esc(p.method)+(p.to?" → "+esc(p.to):"")+"</span>":'<span class="bd no">ждём предоплату '+money(p.need)+"</span>"}
+function waitPay(act){var w=act.filter(function(b){return b.prepay&&b.prepay.need>0&&!b.prepay.paid}),got=act.filter(function(b){return b.prepay&&b.prepay.paid}).reduce(function(s,b){return s+b.prepay.need},0);
+ return (got?'<div class="m">Внесено предоплат: <b>'+money(got)+"</b></div>":"")+(w.length?'<div class="card" style="border-color:var(--bad);border-width:2px"><b>Нужно отправить предоплату ('+w.length+'):</b>'+w.sort(function(a,b){return tmin(a.time)-tmin(b.time)}).map(function(b){return '<div style="margin-top:6px"><b>'+esc(b.name)+"</b> · "+esc(b.time)+' · <a href="tel:'+esc(b.phone)+'" style="color:inherit">'+esc(b.phone)+"</a> · "+money(b.prepay.need)+"</div>"}).join("")+"</div>":"")}
+function drawSearch(){var e=$("sr"),d=$("day");if(!e||!d)return;var s=q.trim().toLowerCase(),dg=digits(q);if(s.length<2&&dg.length<3){e.innerHTML="";d.className="";return}
+ var R=B.filter(function(b){return b.name.toLowerCase().indexOf(s)>-1||(dg.length>=3&&digits(b.phone).indexOf(dg)>-1)}).sort(srt);d.className="hid";
+ e.innerHTML='<div class="m" style="margin-top:8px">Найдено: '+R.length+' (по всем датам)</div>'+R.map(function(b){return card(b,false,true)}).join("")}
+function qlink(){var a=$("qw");if(a)a.href="https://wa.me/?text="+encodeURIComponent($("qt").value)}
+function ctxt(t){function fb(){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");toast("Скопировано")}catch(e){toast("Выделите текст и скопируйте вручную")}a.remove()}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast("Скопировано")},fb);else fb()}
+function confMsg(b){var r=b.msg?parseMsg(b.msg):null,p=b.prepay,un=p&&p.need>0&&!p.paid;
+ var L=["Здравствуйте, "+b.name+"! Ваша бронь в «Аль-Баракат» "+(un?"принята.":"подтверждена."),"","Дата: "+fdate(b.date),"Время: "+b.time+(r&&r.ift?" (ифтар)":""),"Гостей: "+b.guests,"Место: "+(plist(b).join(" + ")||"—")];
+ if(r&&r.lines.length){L.push("","Ваш предзаказ:");r.lines.forEach(function(l,i){L.push((i+1)+". "+l)});if(r.total)L.push("Итого с обслуживанием 10%: "+money(r.total)+" (по меню; окончательный счёт — в ресторане)")}
+ if(p&&p.need>0)L.push("",p.paid?"Предоплата "+money(p.need)+" получена, спасибо!":"Чтобы закрепить стол, просим внести предоплату "+money(p.need)+".");
+ L.push("","Ждём вас на Ифтаре!");return L.join("\n")}
+function waDlg(b){var m=confMsg(b),n=waNum(b.phone);
+ open('<h3>Подтверждение гостю</h3><p class="m">'+esc(b.name)+" · "+esc(b.phone)+'</p><textarea class="o" id="wt" readonly style="height:230px;font-family:inherit;font-size:13px">'+esc(m)+'</textarea><a class="b p" style="display:block;text-align:center;text-decoration:none;margin-top:8px" href="https://wa.me/'+n+'?text='+encodeURIComponent(m)+'">Открыть WhatsApp с этим текстом</a><div class="row"><button class="b" data-a="cc" data-i="wt">Копировать</button>'+(b.confirmed?"":'<button class="b" data-a="cf" data-i="'+b.id+'">Отметить: отправил</button>')+'<button class="b" id="cn">Закрыть</button></div>');$("cn").onclick=close}
+function poDlg(b){open('<h3>Предзаказ: '+esc(b.name)+'</h3><textarea class="o" id="pt2" readonly style="height:260px">'+esc(b.msg)+'</textarea><div class="m">Для Excel: скопируйте и вставьте в лист «Из WhatsApp», ячейка A6.</div><div class="row"><button class="b p" data-a="cc" data-i="pt2">Копировать</button><button class="b" id="cn">Закрыть</button></div>');$("cn").onclick=close}
+function fillFrom(t){var r=parseMsg(t);if(!r.name&&!r.date&&!r.lines.length){$("gi").textContent="Не нашёл данных. Вставьте сообщение гостя целиком.";return}
+ if(r.name)$("fm").value=r.name;if(r.date)$("fd").value=r.date;if(r.guests)$("fg").value=r.guests;
+ var d=$("fd").value,tm=r.time||(r.ift&&IFT[d])||"";if(tm)$("ft").value=tm;curMsg=t;if(r.lines.length)$("fr").checked=true;pg();
+ $("gi").textContent="Заполнено: "+[r.name?"имя":"",r.date?"дата":"",r.guests?"гости":"",r.lines.length?r.lines.length+" блюд":"",r.total?"итого "+money(r.total):""].filter(Boolean).join(", ")+(r.ift&&!tm?". Подача к ифтару: укажите время ифтара вручную (или задайте его во вкладке «+ Бронь»).":(r.ift?". Подача к ифтару: "+tm:""))}
+function moreDlg(b){open('<h3>'+esc(b.name)+'</h3><div class="row">'+(live(b)?'<button class="b r" data-a="cx" data-i="'+b.id+'">Отменить бронь</button>':"")+'<button class="b r" data-a="dl" data-i="'+b.id+'">Удалить</button><button class="b" id="cn">Закрыть</button></div>');$("cn").onclick=close}
+function drawMap(){var H=hallCells(mapH),o=occ(date,mapT,null),h="",nar=H.cols>=6;
+ H.cells.forEach(function(c){var st='style="grid-row:'+c[3]+" / span "+c[5]+";grid-column:"+c[4]+" / span "+c[6]+'"';
+  if(!c[0]){h+='<div class="hl" '+st+'>'+esc(c[1])+"</div>";return}
+  var oc=o[c[0]],p=PLACES.filter(function(x){return x.n===c[0]})[0];
+  h+='<button type="button" class="ht'+(c[2]?" ci":"")+(oc?" oc":"")+'" data-hp="'+c[0]+'" '+st+'>'+esc(c[1])+"<small>"+(oc?esc(oc.time)+(nar?"":" "+esc(oc.name.slice(0,8))):(p?p.cap+(nar?"":" мест"):""))+"</small></button>"});
+ $("hm").style.gridTemplateColumns="repeat("+H.cols+",1fr)";$("hm").innerHTML=h}
+function openMap(h){mapH=h;if(IFT[date])mapT=IFT[date];
+ open('<h3>Свободные столы</h3><div class="hb">'+["Лагман хана","Малый зал","Летка"].map(function(x){return '<button class="b'+(x===h?" p":"")+'" data-hl="'+x+'">'+x+"</button>"}).join("")+'</div><div class="g2"><div><label>Дата</label><input type="date" id="md" value="'+date+'"></div><div><label>Время</label><input type="time" id="mt" value="'+mapT+'"></div></div><div class="hm" id="hm"></div><div class="m" style="margin-top:6px">Зелёные — свободны, красные — заняты. Нажмите свободный стол, чтобы записать бронь.</div><div id="hinfo" class="m"></div><div class="row"><button class="b" id="cn">Закрыть</button></div>');
+ $("cn").onclick=function(){close();render()};$("mt").oninput=function(){mapT=this.value||"19:00";drawMap()};$("md").oninput=function(){if(this.value){date=this.value;if(IFT[date]){mapT=IFT[date];$("mt").value=mapT}drawMap()}};drawMap()}
+function iftList(){var k=Object.keys(IFT).sort().slice(-8);return k.length?"Заданы: "+k.map(function(d){return fdate(d).slice(0,5)+" — "+IFT[d]}).join(" · "):"Время ифтара пока не задано. Нужно для подачи «к ифтару»."}
+function bkBanner(){var ts=0;try{ts=+localStorage.getItem("adm_dl")||0}catch(e){}return B.length&&Date.now()-ts>20*3600*1000?'<div class="card" style="border-color:var(--gd)"><div class="m">Резервная копия не отправлялась больше суток.</div><div class="row"><button class="b p" id="bf3">Отправить копию на Google Диск</button><button class="b" id="bf2">Скачать на телефон</button></div></div>':""}
+function csvEsc(v){v=String(v==null?"":v);return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function backupCsv(){var H=["Дата","Время","Имя","Телефон","Гостей","Место 1","Место 2","Место 3","Статус","Подтв. отправлено","Предзаказ принят","Предоплата","Предоплата внесена","Способ","Кому переведено","Примечание","Принял","Изменил","Записана в Excel","Кто отменил","Причина отмены","Кто удалил","Причина удаления","Текст предзаказа","ID"],R=[H];
+ B.slice().sort(srt).forEach(function(b){var p=plist(b).concat(["","",""]),pr=b.prepay||{},c=b.cancel||{},st=live(b)?(b.confirmed?"Подтверждена":"Новая"):"Отмена";R.push([fdate(b.date),b.time,b.name,b.phone,b.guests,p[0],p[1],p[2],st,b.confirmed&&live(b)?"Да":"Нет",b.preorder?"Да":"Нет",pr.need||"",pr.paid?"Да":(pr.need?"Нет":""),pr.method||"",pr.to||"",b.note||"",b.createdBy||"",b.updatedBy||"",b.exportedAt?"Да":"Нет",c.by||"",c.reason||"","","",b.msg||"",b.id])});
+ D.slice().sort(srt).forEach(function(b){var p=plist(b).concat(["","",""]);R.push([fdate(b.date),b.time,b.name,b.phone,b.guests,p[0],p[1],p[2],"Удалена","","","","","","",b.note||"","","","","","",b.deletedBy||"",b.deletedReason||"",b.msg||"",b.id])});
+ return R.map(function(r){return r.map(csvEsc).join(",")}).join("\n")+"\n"}
+async function toDrive(){var mcp=null;try{mcp=await claude.use("mcp")}catch(e){}if(!mcp){toast("Google Диск здесь недоступен — скачайте файл");return false}
+ var z=function(n){return String(n).padStart(2,"0")},d=new Date(),nm="Резерв броней Аль-Баракат "+iso(d)+" "+z(d.getHours())+"-"+z(d.getMinutes()),inp={title:nm,textContent:backupCsv(),contentMimeType:"text/csv"};if(DRV)inp.parentId=DRV;
+ try{await mcp.callTool("Google Drive","create_file",inp);try{localStorage.setItem("adm_dl",String(Date.now()))}catch(e){}toast("Копия отправлена на Google Диск");return true}
+ catch(e){var c=e&&e.code,m={server_not_connected:"Подключите Google Drive в настройках Claude",needs_reauth:"Переподключите Google Drive в настройках Claude",approval_required:"Нужно разрешение на доступ к Google Диску",blocked_by_policy:"Доступ к Google Диску запрещён настройками"}[c];toast(m||"Не удалось отправить на Google Диск"+(c?" ("+c+")":"")+" — скачайте файл");return false}}
+function find(id){return B.filter(function(x){return x.id===id})[0]}
+function render(){if(!db)return;var ts=[["list","Брони"],["new","+ Бронь"],["del","Удалённые"],["more","Экспорт и настройки"]];$("tabs").innerHTML=ts.map(function(t){return '<button data-t="'+t[0]+'" class="'+(tab===t[0]?"on":"")+'">'+t[1]+"</button>"}).join("");var h="";
+ if(tab==="list"){var dd=dups(B);var L=B.filter(function(b){return b.date===date&&(showX||live(b))&&(!onlyDup||dd[b.id])}).sort(function(a,b){return tmin(a.time)-tmin(b.time)});var act=B.filter(function(b){return b.date===date&&live(b)});
+  h+='<input id="sq" placeholder="Поиск по имени или телефону (все даты)" value="'+esc(q)+'"><div id="sr"></div><div id="day">'+bkBanner()+'<div class="row"><button class="b" id="pv">◀</button><input type="date" id="dt" value="'+date+'" style="flex:1"><button class="b" id="nx">▶</button><button class="b" id="td">Сегодня</button></div><div class="row"><button class="b p" data-hl="Лагман хана" style="width:100%">Показать свободные столы</button></div><div class="m" style="margin-top:8px"><b>Показан только день '+fdate(date)+'.</b> Броней: '+act.length+" · гостей: "+act.reduce(function(s,b){return s+(+b.guests||0)},0)+" · без предзаказа: "+act.filter(function(b){return !b.preorder}).length+'</div>'+waitPay(act)+'<div class="row"><label class="c"><input type="checkbox" id="sx"'+(showX?" checked":"")+'> отменённые</label><label class="c"><input type="checkbox" id="od"'+(onlyDup?" checked":"")+'> только дубли</label></div>'+(L.length?L.map(function(b){return card(b,dd[b.id])}).join(""):'<div class="card m">На эту дату броней нет.</div>')+'</div>'}
+ else if(tab==="new"){h='<div class="card"><b>Новая бронь</b><label>Дата</label><input type="date" id="dt" value="'+date+'"><div class="row"><button class="b" data-hl="Лагман хана" style="width:100%">Показать свободные столы</button></div><div class="row"><button class="b p" id="nb">Открыть форму новой брони</button></div></div><div class="card"><b>Быстрый ответ гостю</b><div class="m">Первое сообщение: ссылка на форму брони и предзаказа. Текст можно править.</div><textarea id="qt" rows="9" style="margin-top:6px">'+esc(TPL)+'</textarea><div class="row"><button class="b p" id="qc">Копировать</button><a class="b" id="qw" href="#" style="text-decoration:none">Открыть в WhatsApp</a><button class="b" id="qs">Сохранить текст</button></div></div>'}
+ else if(tab==="del"){var Ds=D.slice().sort(function(a,b){return b.deletedAt-a.deletedAt});h=Ds.length?Ds.map(function(b){return '<div class="card x"><div class="t">'+esc(fdate(b.date))+" "+esc(b.time)+" · "+esc(b.name)+" · "+esc(b.guests)+' чел.</div><div class="m">'+esc(b.phone)+" · "+esc(plist(b).join(" + "))+'</div><div class="m">Удалил: '+esc(b.deletedBy)+" · "+nowTxt(b.deletedAt)+"<br>Причина: "+esc(b.deletedReason)+'</div><div class="row"><button class="b" data-a="rs" data-i="'+b.id+'">Восстановить</button></div></div>'}).join(""):'<div class="card m">Удалённых броней нет.</div>'}
+ else{h='<details class="card"><summary>Перенос в Excel по дням</summary><label>За какой день</label><input type="date" id="ef" value="'+date+'"><div class="row"><button class="b p" id="en">Не записанные за этот день</button><button class="b" id="eg">Все брони за этот день</button></div><label class="c"><input type="checkbox" id="ex"> в «Все брони» включить отменённые</label><div class="row"><button class="b" id="eN">Не записанные за все дни</button></div><div id="en2" class="m" style="margin-top:8px"></div><textarea class="o hid" id="eo" readonly></textarea><div class="row hid" id="ea"><button class="b p" id="ec">Копировать</button><button class="b" id="es">Скачать файл</button></div><div class="row hid" id="eb"><button class="b p" id="em">Я записал в Excel — отметить</button></div><div class="m">В Excel на листе «Брони» встаньте в ячейку B первой пустой строки и вставьте (колонки B–M). Ничего не удаляется: после «Не записанные…» нажмите «Я записал в Excel», и эти брони получат отметку.</div></details>'+
+  '<details class="card"><summary>Резервные копии</summary><div class="m">Копия делается автоматически раз в 6 часов при открытии и вручную. Хранятся последние 6 (в сжатом виде, чтобы не занимать место).</div><div class="row"><button class="b p" id="bk">Сделать копию сейчас</button><button class="b" id="bg">Копия на Google Диск</button><button class="b" id="bf">Скачать всё (файл)</button></div><div id="bl"></div></details><div class="card"><b>Настройки</b><label>Время ифтара по дням</label><div class="row"><input type="date" id="id1" value="'+date+'"><input type="time" id="it1" value="'+(IFT[date]||"")+'" style="width:130px"><button class="b" id="is">Сохранить</button></div><div class="m" id="il">'+iftList()+'</div><label>Сколько минут занят стол (проверка конфликтов)</label><div class="row"><input id="du" type="number" min="30" max="360" value="'+DUR+'" style="width:100px"><button class="b" id="ds">Сохранить</button></div></div><div class="card"><b>Пароль для смены имени</b><div class="m">Имя можно менять без пароля с телефона, где вы уже входили. С нового телефона потребуется пароль. Это защита от случайных входов, а не от взлома.</div>'+(PINH?'<label>Текущий пароль</label><input id="pc" type="password">':'')+'<label>Новый пароль (пусто — снять пароль)</label><input id="pn" type="password"><div class="row"><button class="b" id="ps">Сохранить пароль</button></div></div>';}
+ $("app").innerHTML=h;$("app").className="";$("fab").className="fab";if(tab==="list")drawSearch();if(tab==="new")qlink();$("msg").className="hid";if(tab==="more")backups()}
+async function backups(){var s=await db.collection("backups").where("i","==",0).get();BK=s.docs.map(function(x){return x.data()}).sort(function(a,b){return b.stamp-a.stamp});var e=$("bl");if(!e)return;e.innerHTML=BK.map(function(b){return '<div class="row m" style="justify-content:space-between"><span>'+nowTxt(b.stamp)+" · "+b.count+" броней · "+esc(b.by)+'</span><span><button class="b" data-a="bd" data-i="'+b.stamp+'">Скачать</button> <button class="b r" data-a="br" data-i="'+b.stamp+'">Восстановить</button></span></div>'}).join("")||'<div class="m">Копий пока нет.</div>'}
+async function gz(s){var cs=new CompressionStream("gzip"),w=cs.writable.getWriter();w.write(new TextEncoder().encode(s));w.close();var b=new Uint8Array(await new Response(cs.readable).arrayBuffer()),bin="";for(var i=0;i<b.length;i+=8192)bin+=String.fromCharCode.apply(null,b.subarray(i,i+8192));return btoa(bin)}
+async function ungz(t){var bin=atob(t),b=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);var ds=new DecompressionStream("gzip"),w=ds.writable.getWriter();w.write(b);w.close();return await new Response(ds.readable).text()}
+async function makeBackup(by){var raw=JSON.stringify({bookings:B,deleted:D}),s=raw,z=0;try{if(typeof CompressionStream!=="undefined"){s=await gz(raw);z=1}}catch(e){s=raw;z=0}
+ var CH=180000,n=Math.max(1,Math.ceil(s.length/CH)),st=Date.now();for(var i=0;i<n;i++)await db.doc("backups/"+st+"_"+i).set({stamp:st,i:i,n:n,z:z,json:s.slice(i*CH,(i+1)*CH),by:by,count:B.length});await db.doc("meta/backup").set({ts:st});
+ var l=(await db.collection("backups").where("i","==",0).get()).docs.map(function(x){return x.data()}).sort(function(a,b){return b.stamp-a.stamp});for(var k=6;k<l.length;k++)for(var j=0;j<l[k].n;j++)await db.doc("backups/"+l[k].stamp+"_"+j).delete()}
+async function getBackup(st){var f=await db.doc("backups/"+st+"_0").get();var d0=f.data(),n=d0.n,s=d0.json;for(var i=1;i<n;i++)s+=(await db.doc("backups/"+st+"_"+i).get()).data().json;return JSON.parse(d0.z?await ungz(s):s)}
+async function saveFile(name,data){var d=null;try{d=await claude.use("downloads")}catch(e){}if(d){try{await d.save({filename:name,data:data});return}catch(e){}}toast("Скачивание недоступно — скопируйте текст")}
+function copy(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).then(function(){toast("Скопировано")},fb);fb();function fb(){var a=$("eo");a.select();try{document.execCommand("copy");toast("Скопировано")}catch(e){toast("Выделите текст и скопируйте вручную")}}}
+document.addEventListener("click",async function(e){var t=e.target.closest("button");if(!t||!db)return;var a=t.dataset.a,i=t.dataset.i;
+ if(t.id==="fab"){form(null,date);return}
+ if(t.dataset.hl){openMap(t.dataset.hl);return}
+ if(t.dataset.hp){var pn2=t.dataset.hp;if(occ(date,mapT,null)[pn2]){var L3=B.filter(function(b){return b.date===date&&live(b)&&plist(b).indexOf(pn2)>-1}).sort(srt);$("hinfo").innerHTML="<b>"+esc(pn2)+" занят:</b>"+L3.map(function(b){return '<div style="margin-top:4px">'+esc(b.time)+" · "+esc(b.name)+" · "+esc(b.guests)+' чел. <button class="b" data-a="ed" data-i="'+b.id+'">Открыть</button></div>'}).join("")}else form(null,date,false,[pn2],mapT);return}
+ if(t.dataset.a==="wa"){waDlg(find(t.dataset.i));return}
+ if(t.dataset.a==="po"){poDlg(find(t.dataset.i));return}
+ if(t.dataset.a==="cf"){await db.doc("bookings/"+t.dataset.i).update({confirmed:true,updatedBy:me,updatedAt:Date.now()});close();toast("Отмечено: подтверждение отправлено");return}
+ if(t.dataset.a==="cc"){ctxt($(t.dataset.i).value);return}
+ if(t.id==="qc"){ctxt($("qt").value);return}
+ if(t.id==="qs"){TPL=$("qt").value;await db.doc("meta/settings").set({dur:DUR,tpl:TPL});toast("Текст сохранён");return}
+ if(t.id==="is"){var dk=$("id1").value;if(!dk){toast("Выберите дату");return}IFT[dk]=$("it1").value;if(!IFT[dk])delete IFT[dk];await db.doc("meta/iftar").set(IFT);toast("Время ифтара сохранено");$("il").textContent=iftList();return}
+ if(t.id==="gf"){fillFrom($("gm").value);return}
+ if(t.dataset.a==="mo"){moreDlg(find(t.dataset.i));return}
+ 
+if(t.dataset.pn){var pn=t.dataset.pn,k=selP.indexOf(pn);if(k>-1)selP.splice(k,1);else if(selP.length<3)selP.push(pn);else toast("Максимум 3 места");pg();return}
+ if(t.id==="na"){form(null,date,true);return}
+ if(t.dataset.dd){date=t.dataset.dd;render();return}
+ if(t.dataset.t){tab=t.dataset.t;render();return}
+ if(t.id==="who"){askName(false);return}
+ if(t.id==="nb"){form();return}if(t.id==="pv"||t.id==="nx"){var d=new Date(date+"T12:00");d.setDate(d.getDate()+(t.id==="nx"?1:-1));date=iso(d);render();return}if(t.id==="td"){date=iso(new Date());render();return}
+ if(a==="ed")form(find(i));if(a==="cx")cancelB(find(i));if(a==="dl")delB(find(i));
+ if(a==="pre"){var b=find(i);await db.doc("bookings/"+i).update({preorder:!b.preorder,updatedBy:me,updatedAt:Date.now()})}
+ if(a==="rs")restoreB(D.filter(function(x){return x.id===i})[0]);
+ if(t.id==="eg"){var f=$("ef").value;if(!f){toast("Выберите день");return}var x=$("ex").checked;var L=B.filter(function(b){return b.date===f&&(x||live(b))}).sort(srt);$("eo").value=tsv(L);$("eo").className="o";$("ea").className="row";$("eb").className="row hid";$("en2").textContent="Все брони за "+fdate(f)+": "+L.length+" (отметки не меняются)"}
+ if(t.id==="en"||t.id==="eN"){var f2=$("ef").value;if(t.id==="en"&&!f2){toast("Выберите день");return}var L2=B.filter(function(b){return pend(b)&&(t.id==="eN"||b.date===f2)}).sort(srt);exIds=L2.map(function(b){return b.id});$("eo").value=tsv(L2);$("eo").className="o";$("ea").className="row";$("eb").className=L2.length?"row":"row hid";var ch=L2.filter(function(b){return b.exportedAt}).length;$("en2").textContent=L2.length?("Не записано "+(t.id==="eN"?"за все дни":"за "+fdate(f2))+": "+L2.length+(ch?" · из них изменённых после записи: "+ch+" (найдите их в Excel и исправьте)":"")):"Всё уже записано в Excel."}
+ if(t.id==="em"){if(!exIds.length)return;var ts=Date.now();await Promise.all(exIds.map(function(id){return db.doc("bookings/"+id).update({exportedAt:ts,exportedBy:me})}));toast("Отмечено как записанные: "+exIds.length);exIds=[];render()}
+ if(t.id==="ec")copy($("eo").value);if(t.id==="es")saveFile("broni_"+date+".tsv",$("eo").value);
+ if(t.id==="bk"){await makeBackup(me);toast("Копия создана");backups()}if(t.id==="bf3"||t.id==="bg"){t.disabled=true;var okd=await toDrive();t.disabled=false;if(okd)render();return}
+ if(t.id==="bf"||t.id==="bf2"){try{localStorage.setItem("adm_dl",String(Date.now()))}catch(e){}saveFile("copy_"+iso(new Date())+".json",JSON.stringify({bookings:B,deleted:D}));if(t.id==="bf2")render()}
+ if(a==="bd"){var o=await getBackup(i);saveFile("copy_"+i+".json",JSON.stringify(o))}
+ if(a==="br"){reasonDlg("Восстановить из копии "+nowTxt(+i)+"?","Восстановить",async function(w,r){var o=await getBackup(i);for(var k=0;k<o.bookings.length;k++)await db.doc("bookings/"+o.bookings[k].id).set(o.bookings[k]);for(k=0;k<(o.deleted||[]).length;k++)await db.doc("deleted/"+o.deleted[k].id).set(o.deleted[k]);toast("Восстановлено: "+o.bookings.length)})}
+ if(t.id==="ps"){var np=$("pn").value.trim(),cp=$("pc")?$("pc").value:"";if(PINH&&await sha(cp)!==PINH){toast("Неверный текущий пароль");return}if(np&&np.length<4){toast("Пароль — минимум 4 символа");return}PINH=np?await sha(np):"";await db.doc("meta/pin").set({h:PINH});toast(np?"Пароль установлен":"Пароль снят");render();return}
+ if(t.id==="ds"){DUR=+$("du").value||120;await db.doc("meta/settings").set({dur:DUR,tpl:TPL});toast("Сохранено")}});
+document.addEventListener("input",function(e){if(e.target.id==="sq"){q=e.target.value;drawSearch()}if(e.target.id==="qt")qlink();});
+document.addEventListener("change",function(e){var t=e.target;if(t.id==="id1"){$("it1").value=IFT[t.value]||"";return}if(t.id==="dt"){date=t.value;render()}if(t.id==="sx"){showX=t.checked;render()}if(t.id==="od"){onlyDup=t.checked;render()}});
+async function init(){var T=setTimeout(function(){if(!db){$("msg").textContent="Нет доступа к общей базе. Войдите в Claude под своей учётной записью и попросите владельца пригласить вас с правом редактирования."}},10000);
+ try{db=await claude.use("db");var u=await claude.use("user");if(u&&u.id)uid=await u.id()}catch(e){db=null}
+ if(!db){$("msg").textContent="Нет доступа к общей базе. Войдите в Claude под своей учётной записью и попросите владельца пригласить вас с правом редактирования.";return}clearTimeout(T);
+ try{me=localStorage.getItem("adm_name")||""}catch(e){}if(!me&&uid){try{var p=await db.doc("data/users/"+uid+"/profile").get();if(p.exists)me=p.data().name||""}catch(e){}}
+ try{var pp=await db.doc("meta/pin").get();if(pp.exists)PINH=pp.data().h||""}catch(e){}if(me&&!PINH)try{localStorage.setItem("adm_trust","1")}catch(e){}$("who").textContent=me?"👤 "+me+" ✎":"Войти";var ready=0,bkDone=0,tryBk=function(){if(bkDone||++ready<2)return;bkDone=1;db.doc("meta/backup").get().then(function(s){var ts=s.exists?s.data().ts:0;if(B.length&&Date.now()-ts>6*3600*1000)makeBackup(me||"авто")})};
+ db.doc("meta/drive").get().then(function(s){if(s.exists)DRV=s.data().folder||""}).catch(function(){});db.doc("meta/iftar").get().then(function(s){if(s.exists)IFT=s.data()}).catch(function(){});db.doc("meta/settings").get().then(function(s){if(s.exists){if(s.data().dur)DUR=s.data().dur;if(s.data().tpl)TPL=s.data().tpl}}).catch(function(){});
+ db.collection("bookings").onSnapshot(function(s){B=s.docs.map(function(x){return x.data()});render();if(ready<2)tryBk()},function(){$("msg").textContent="Ошибка чтения базы"});
+ db.collection("deleted").onSnapshot(function(s){D=s.docs.map(function(x){return x.data()});if(tab==="del")render();tryBk()});
+ render();if(!me)askName(true)}
+init();
+</script></body></html>
