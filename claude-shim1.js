@@ -4,13 +4,13 @@
 (function () {
   // ===== ВСТАВЬТЕ СВОИ ДАННЫЕ ИЗ FIREBASE (Project settings → Your apps → Config) =====
   var firebaseConfig = {
-    apiKey: "ВСТАВЬТЕ",
-    authDomain: "ВСТАВЬТЕ",
-    projectId: "ВСТАВЬТЕ",
-    appId: "ВСТАВЬТЕ"
+     apiKey: "AIzaSyAN0wSjpLMQqEiYm2yvfW142JHyTIa34bk",
+    authDomain: "register-app-30f04.firebaseapp.com",
+    projectId: "register-app-30f04",
+    appId: "1:608203772826:web:49fd5b75e7efaa6a0de023"
   };
   // ===== АДРЕСА ВЕБ-ПРИЛОЖЕНИЙ GOOGLE (после «Deploy → Web app», см. README) =====
-  var DRIVE_URL = "ВСТАВЬТЕ"; // скрипт 1: копии на Google Диск (drive-backup.gs)
+  var DRIVE_URL = "https://script.google.com/macros/s/AKfycbwBaYUZSdHquL54C9x_aOtxwwuBwpQjmjcyTnfAO3VKtexngexc_Ge5TqWoOsFkz_No/exec"; // скрипт 1: копии на Google Диск (drive-backup.gs)
   var SHEET_URL = "ВСТАВЬТЕ"; // скрипт 2: Google Таблица (sheet-sync.gs)
   // =====================================================================================
 
