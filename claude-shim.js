@@ -11,7 +11,7 @@
   };
   // ===== АДРЕСА ВЕБ-ПРИЛОЖЕНИЙ GOOGLE (после «Deploy → Web app», см. README) =====
   var DRIVE_URL = "https://script.google.com/macros/s/AKfycbwBaYUZSdHquL54C9x_aOtxwwuBwpQjmjcyTnfAO3VKtexngexc_Ge5TqWoOsFkz_No/exec"; // скрипт 1: копии на Google Диск (drive-backup.gs)
-  var SHEET_URL = "ВСТАВЬТЕ"; // скрипт 2: Google Таблица (sheet-sync.gs)
+  var SHEET_URL = "https://script.google.com/u/1/home/projects/1Fyyz8qQO1X6OI3oOmUn7iHOnyKnouwgj5wx98WO7hZBUYK6EQRsSM5fu/edit"; // скрипт 2: Google Таблица (sheet-sync.gs)
   // =====================================================================================
 
   function isSet(v) { return v && v.indexOf("ВСТАВЬТЕ") === -1; }
